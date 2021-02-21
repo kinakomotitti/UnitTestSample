@@ -4,14 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UnitTestSample.IServices;
+using UnitTestSample.Controllers.Base;
+using UnitTestSample.Interfaces;
 using UnitTestSample.Models;
 
 namespace UnitTestSample.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class WeatherForecastController : MyBaseController
     {
         private static readonly string[] Summaries = new[]
         {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UnitTestSample.IServices;
+using UnitTestSample.Interfaces;
 
 namespace UnitTestSample.Services
 {
@@ -30,7 +30,7 @@ namespace UnitTestSample.Services
 
         public void StartStep2()
         {
-            //throw new NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

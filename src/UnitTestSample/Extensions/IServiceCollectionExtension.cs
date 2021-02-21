@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using UnitTestSample.IServices;
+using UnitTestSample.Interfaces;
 using UnitTestSample.Services;
 
 namespace UnitTestSample.Extensions
