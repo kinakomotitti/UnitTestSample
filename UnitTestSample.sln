@@ -14,7 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ReadMe.md = ReadMe.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTest", "tests\NUnitTest\NUnitTest.csproj", "{F7E4101A-9144-4868-A48A-32D30FD12C55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnitTest", "tests\NUnitTest\NUnitTest.csproj", "{F7E4101A-9144-4868-A48A-32D30FD12C55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestProject", "XUnitTestProject\XUnitTestProject.csproj", "{EA91F5D6-F58A-4F25-A9E7-3D14681D3161}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +32,10 @@ Global
 		{F7E4101A-9144-4868-A48A-32D30FD12C55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7E4101A-9144-4868-A48A-32D30FD12C55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7E4101A-9144-4868-A48A-32D30FD12C55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA91F5D6-F58A-4F25-A9E7-3D14681D3161}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA91F5D6-F58A-4F25-A9E7-3D14681D3161}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA91F5D6-F58A-4F25-A9E7-3D14681D3161}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA91F5D6-F58A-4F25-A9E7-3D14681D3161}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +43,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{86C78AA0-8CC1-4186-B884-F3CD618472FE} = {B9030162-6D72-43F6-834E-3ECCEF79088D}
 		{F7E4101A-9144-4868-A48A-32D30FD12C55} = {B36F0894-42D5-4CA6-9B31-3BB7F06BB172}
+		{EA91F5D6-F58A-4F25-A9E7-3D14681D3161} = {B36F0894-42D5-4CA6-9B31-3BB7F06BB172}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2E02ADFC-F62E-4287-B53F-D7BF48553908}
