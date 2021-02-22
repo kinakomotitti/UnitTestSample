@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnitTestSample.Controllers.Base;
 using UnitTestSample.Interfaces;
 using UnitTestSample.Models;
+using UnitTestSample.Services;
 
 namespace UnitTestSample.Controllers
 {
