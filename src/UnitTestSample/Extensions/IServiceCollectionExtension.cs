@@ -12,8 +12,10 @@ namespace UnitTestSample.Extensions
         public static IServiceCollection AddMySettings(this IServiceCollection services)
         {
             services.AddTransient<IDatetimeService, DatetimeService>();
-            services.AddTransient<HeavyWorkOne, HeavyWorkOne>();
+            services.AddTransient<IHeavyWorkOne, HeavyWorkOne>();
             services.AddTransient<IHeavyWorkTwo, HeavyWorkTwo>();
+            services.AddTransient<IWeatherForecastService, WeatherForecastService>();
+            services.AddTransient<IAzureMapsClientService, AzureMapsClientService>();
             services.AddDbContext<BloggingContext>();
 
             return services;
