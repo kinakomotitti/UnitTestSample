@@ -11,6 +11,9 @@ namespace UnitTestSample.Services
     {
         private readonly ILogger<HeavyWorkOne> _logger;
         private readonly IDatetimeService _datetimeService;
+
+        public HeavyWorkOne() { }
+
         public HeavyWorkOne(ILogger<HeavyWorkOne> logger,IDatetimeService datetimeService)
         {
             this._logger = logger;

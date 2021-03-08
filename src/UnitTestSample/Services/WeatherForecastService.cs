@@ -13,6 +13,7 @@ namespace UnitTestSample.Services
     {
 
         private readonly IAzureMapsClientService _azureMapsClient;
+        
         public WeatherForecastService(IAzureMapsClientService azureMapsClient)
         {
             this._azureMapsClient = azureMapsClient;
