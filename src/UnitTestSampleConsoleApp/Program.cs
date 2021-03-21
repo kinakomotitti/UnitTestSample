@@ -2,31 +2,35 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace UnitTestSampleConsoleApp
 {
     class Program
     {
+        private readonly string[] args;
+
+        public Program(string[] args)
+        {
+            this.args = args;
+        }
+
         static void Main(string[] args)
         {
-            var host = Host.CreateDefaultBuilder()
-                .ConfigureLogging(logging=>
-                {
-                    logging.ClearProviders();
-                    logging.AddLog4Net();
-                    logging.SetMinimumLevel(LogLevel.Debug);
-                })
+            Host.CreateDefaultBuilder(args)
                 .ConfigureServices((context, services) =>
                 {
-                    services.AddTransient<IMessageWriter, MessageWriter>();
+                    services.AddTransient<Program>();
+                    services.AddSingleton<string[]>(args);
                 })
-                .Build();
-            var svc = ActivatorUtilities.CreateInstance<MessageWriter>(host.Services);
-            svc.Write();
+                .Build().Services
+                .GetRequiredService<Program>()
+                .Run();
+        }
+
+        public void Run()
+        {
+            //anything....
+
         }
     }
 
