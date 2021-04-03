@@ -15,10 +15,12 @@ namespace UnitTestSample.Services
     public class AzureMapsClientService : IAzureMapsClientService
     {
         private readonly IOptions<AzureMaps> _options;
+        private readonly IHttpClientFactory _factory;
         private readonly ILogger<AzureMaps> _logger;
-        public AzureMapsClientService(ILogger<AzureMaps> logger, IOptions<AzureMaps> options)
+        public AzureMapsClientService(ILogger<AzureMaps> logger, IOptions<AzureMaps> options, IHttpClientFactory  factory)
         {
             this._options = options;
+            this._factory = factory;
             this._logger = logger;
         }
 
@@ -54,23 +56,20 @@ namespace UnitTestSample.Services
         {
             try
             {
-                using (var client = new HttpClient())
+                var response = this._factory.CreateClient().GetAsync(requestUrl).Result;
+                if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    var response = client.GetAsync(requestUrl).Result;
-                    if (response.StatusCode != HttpStatusCode.OK)
-                    {
-                        return (response.StatusCode, null);
-                    }
-
-                    var responseObject = JsonConvert.DeserializeObject<T>(response.Content.ReadAsStringAsync().Result);
-                    return (response.StatusCode, responseObject);
+                    return (response.StatusCode, null);
                 }
+
+                var responseObject = JsonConvert.DeserializeObject<T>(response.Content.ReadAsStringAsync().Result);
+                return (response.StatusCode, responseObject);
             }
             catch (Exception ex)
             {
                 this._logger.LogError(ex.Message);
                 this._logger.LogDebug(ex.ToString());
-                return (null, null);
+                throw ex;
             }
         }
     }

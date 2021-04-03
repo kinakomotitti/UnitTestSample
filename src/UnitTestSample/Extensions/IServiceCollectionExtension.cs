@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Http;
 using Microsoft.OpenApi.Models;
+using System.Net.Http;
 using UnitTestSample.Appsettings;
 using UnitTestSample.Interfaces;
 using UnitTestSample.Services;
@@ -17,7 +19,7 @@ namespace UnitTestSample.Extensions
             services.AddTransient<IWeatherForecastService, WeatherForecastService>();
             services.AddTransient<IAzureMapsClientService, AzureMapsClientService>();
             services.AddDbContext<BloggingContext>();
-
+            services.AddHttpClient();
             return services;
         }
 
