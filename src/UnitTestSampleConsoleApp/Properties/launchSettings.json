@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "UnitTestSampleConsoleApp": {
-      "commandName": "Project",
-      "commandLineArgs": "test test -test aa --help help"
-    }
-  }
-}
