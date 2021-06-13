@@ -8,6 +8,6 @@ namespace WebApiSample.Interfaces
 {
     public interface IAzureMapsClientService
     {
-        public (bool requestStatus, CurrentConditionsModel response) WeatherGetCurrentConditions(string query);
+        public CurrentConditionsModel WeatherGetCurrentConditions(string query);
     }
 }

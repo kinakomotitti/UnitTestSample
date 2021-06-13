@@ -13,7 +13,7 @@ namespace WebApiSample.Services
     {
 
         private readonly IAzureMapsClientService _azureMapsClient;
-        
+
         public WeatherForecastService(IAzureMapsClientService azureMapsClient)
         {
             this._azureMapsClient = azureMapsClient;
@@ -24,17 +24,14 @@ namespace WebApiSample.Services
 
             var result = this._azureMapsClient.WeatherGetCurrentConditions($"{latitude}%2C{longitude}");
             var forecastList = new List<WeatherForecast>();
-            if (result.requestStatus)
+            foreach (var item in result.results)
             {
-                foreach (var item in result.response.results)
+                forecastList.Add(new WeatherForecast()
                 {
-                    forecastList.Add(new WeatherForecast()
-                    {
-                        Date = item.dateTime,
-                        Summary = item.phrase,
-                        TemperatureC = double.Parse(item.temperature.value)
-                    }) ;
-                }
+                    Date = item.dateTime,
+                    Summary = item.phrase,
+                    TemperatureC = double.Parse(item.temperature.value)
+                });
             }
             return forecastList;
         }

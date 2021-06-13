@@ -24,7 +24,7 @@ namespace WebApiSample.Services
             this._logger = logger;
         }
 
-        public (bool requestStatus, CurrentConditionsModel response) WeatherGetCurrentConditions(string query)
+        public CurrentConditionsModel WeatherGetCurrentConditions(string query)
         {
             StringBuilder urlBuilder = new StringBuilder();
             urlBuilder.Append("https://atlas.microsoft.com/weather/currentConditions/json");
@@ -36,16 +36,22 @@ namespace WebApiSample.Services
             switch (result.statusCode)
             {
                 case HttpStatusCode.OK:
-                    return (true, result.response);
+                    return result.response;
+                
                 case HttpStatusCode.BadRequest:
-                case HttpStatusCode.Unauthorized:
-                case HttpStatusCode.Forbidden:
                 case HttpStatusCode.NotFound:
+                    this._logger.LogWarning($"{result.statusCode}:{result.response.ToString()}");
+                    return new CurrentConditionsModel();
+         
                 case HttpStatusCode.InternalServerError:
+                case HttpStatusCode.Forbidden:
+                case HttpStatusCode.Unauthorized:
+                    this._logger.LogError($"{result.statusCode}:{result.response.ToString()}");
+                    return new CurrentConditionsModel();
+                
                 default:
-                    break;
+                    return new CurrentConditionsModel();
             }
-            return (false, new CurrentConditionsModel());
         }
 
         private (HttpStatusCode? statusCode, T response) GetRequestCore<T>(string requestUrl) where T : BaseModel
