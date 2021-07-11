@@ -3,10 +3,12 @@
     #region using
 
     using ClosedXML.Excel;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text;
     using System.Text.RegularExpressions;
 
     #endregion
@@ -22,6 +24,11 @@
             }
         }
 
+        class PopulationByAges
+        {
+            public List<PopulationByAge> Contents { get; set; }
+        }
+
         class PopulationByAge
         {
             public string Age { get; set; }
@@ -35,9 +42,9 @@
             public string TypeOfValue { get; set; }
         }
 
-
         void Run(string filePath)
         {
+            PopulationByAges data = null;
             using (var workbook = new XLWorkbook(filePath))
             {
                 IXLWorksheet worksheet = null;
@@ -45,24 +52,24 @@
 
                 var headers = new Dictionary<string, HeaderItem>()
                 {
-                    { "Age",new HeaderItem(){TypeOfValue =nameof(String) }},
-                    { "Male", new HeaderItem() { TypeOfValue = nameof(Int32) }},
-                    { "Female", new HeaderItem() { TypeOfValue = nameof(Int32) }}
+                    { "Age",new HeaderItem()},
+                    { "Male", new HeaderItem() },
+                    { "Female", new HeaderItem()}
                 };
-                var result = this.GetAllDataFromWorksheet(worksheet, headers, "Age");
-                Console.WriteLine("Age,Male,Female");
-                foreach (var item in result)
-                {
-                    Console.WriteLine($"{item.Age},{item.Male},{item.Female}");
-                }
+                data = this.GetAllDataFromWorksheet(worksheet, headers, "Age");
             }
+
+            Console.WriteLine("Age,Male,Female");
+            foreach (var item in data.Contents)
+            {
+                Console.WriteLine($"{item.Age},{item.Male},{item.Female}");
+            }
+
         }
 
-        List<PopulationByAge> GetAllDataFromWorksheet(IXLWorksheet worksheet, Dictionary<string, HeaderItem> headers, string primaryKey)
+        PopulationByAges GetAllDataFromWorksheet(IXLWorksheet worksheet, Dictionary<string, HeaderItem> headers, string primaryKey)
         {
-            var result = new List<PopulationByAge>();
             var headerCells = worksheet.Cells();
-
 
             foreach (var header in headers)
             {
@@ -75,38 +82,31 @@
 
             var primaryRows = bodyCells.Where(i => i.Address.ColumnNumber == headers[primaryKey].Address.ColumnNumber).Select(i => i);
 
+            StringBuilder sb = new StringBuilder();
+            sb.Append("{\"contents\":[");
             foreach (var primaryRow in primaryRows)
             {
                 Regex regex = new Regex("^[0-9]");
                 if (regex.IsMatch(primaryRow.Value.ToString().Trim()) == false) continue;
 
+                sb.Append("{");
+
                 var excelRow = primaryRow.Address.RowNumber;
-                var newItem = new PopulationByAge();
                 foreach (var header in headers)
                 {
                     var valueObject = worksheet.Cells().Where(i => i.Address.RowNumber == excelRow &&
                                                              i.Address.ColumnNumber == headers[header.Key].Address.ColumnNumber)
                                          .Select(i => i.Value)
                                          .FirstOrDefault();
-
-                    switch (header.Value.TypeOfValue)
-                    {
-                        case nameof(String):
-                            var valueString = valueObject.ToString().Trim().Split(" ").First();
-                            typeof(PopulationByAge).GetProperty(header.Key).SetValue(newItem, valueString);
-                            break;
-                        case nameof(Int32):
-                            var valueInt = int.Parse(valueObject.ToString().Trim());
-                            typeof(PopulationByAge).GetProperty(header.Key).SetValue(newItem, valueInt);
-                            break;
-                        default:
-                            break;
-                    }
-
+                    sb.Append($"\"{header.Key}\":\"{valueObject.ToString().Trim()}\",");
                 }
-                result.Add(newItem);
+                sb.ToString().Remove(sb.Length - 1, 1);
+                sb.Append("},");
             }
-            return result;
+            sb.ToString().Remove(sb.Length - 1, 1);
+            sb.Append("]}");
+
+            return JsonConvert.DeserializeObject<PopulationByAges>(sb.ToString());
         }
 
         IXLAddress GetSpecificHeaderColumn(IXLCells cells, string headerString)
