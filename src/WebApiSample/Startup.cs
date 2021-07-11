@@ -39,7 +39,11 @@ namespace WebApiSample
 
             app.UseRouting();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHealthChecks("/healdcheck");
+                endpoints.MapControllers();
+            });
         }
     }
 }

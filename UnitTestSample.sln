@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiSample", "src\WebApiS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppSample", "src\ConsoleAppSample\ConsoleAppSample.csproj", "{76B9CF2A-8E97-4096-BFA1-1056A122E076}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelOperationConsoleApp", "src\ExcelOperationConsoleApp\ExcelOperationConsoleApp.csproj", "{2F527211-B0AE-4700-9B31-72206EE1D885}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{76B9CF2A-8E97-4096-BFA1-1056A122E076}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76B9CF2A-8E97-4096-BFA1-1056A122E076}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76B9CF2A-8E97-4096-BFA1-1056A122E076}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F527211-B0AE-4700-9B31-72206EE1D885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F527211-B0AE-4700-9B31-72206EE1D885}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F527211-B0AE-4700-9B31-72206EE1D885}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F527211-B0AE-4700-9B31-72206EE1D885}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +51,7 @@ Global
 		{CECCAD5E-B040-4536-887A-EDFA3A80A97D} = {B36F0894-42D5-4CA6-9B31-3BB7F06BB172}
 		{82A1A3C7-040B-484D-B014-4D1F586221AE} = {B9030162-6D72-43F6-834E-3ECCEF79088D}
 		{76B9CF2A-8E97-4096-BFA1-1056A122E076} = {B9030162-6D72-43F6-834E-3ECCEF79088D}
+		{2F527211-B0AE-4700-9B31-72206EE1D885} = {B9030162-6D72-43F6-834E-3ECCEF79088D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2E02ADFC-F62E-4287-B53F-D7BF48553908}

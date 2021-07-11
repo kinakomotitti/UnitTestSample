@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Http;
 using Microsoft.OpenApi.Models;
 using System.Net.Http;
@@ -26,7 +27,12 @@ namespace WebApiSample.Extensions
         public static IServiceCollection AddMyConfigureSettings(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<AzureMaps>(configuration.GetSection(nameof(AzureMaps)));
-
+            services.AddHealthChecks()
+                    .AddCheck(
+                        "Sample",
+                        new SampleHealthCheckService(),
+                        HealthStatus.Unhealthy,
+                        new string[] { "Sample" });
             return services;
         }
 

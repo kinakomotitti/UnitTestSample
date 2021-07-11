@@ -1,56 +1,64 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace ConsoleAppSample
+class Program
 {
-    class Program
+    static void Main()
     {
-        private readonly string[] args;
+        var firstLine = Console.ReadLine();
+        var N = int.Parse(firstLine.Split(' ')[0]);
+        var X = int.Parse(firstLine.Split(' ')[1]);
 
-        public Program(string[] args)
-        {
-            this.args = args;
-        }
-
-        static void Main(string[] args)
-        {
-            Host.CreateDefaultBuilder(args)
-                .ConfigureServices((context, services) =>
-                {
-                    services.AddTransient<Program>();
-                    services.AddSingleton<string[]>(args);
-                })
-                .Build().Services
-                .GetRequiredService<Program>()
-                .Run();
-        }
-
-        public void Run()
-        {
-            //anything....
-
-        }
+        var sweets = Program.GetSweetsPriceList(N);
+        Console.WriteLine(Program.Caluculate(sweets, X));
     }
 
-    public interface IMessageWriter
+    static List<int> GetSweetsPriceList(int numberOfList)
     {
-        void Write();
+        var list = new List<int>();
+
+        for (int i = 0; i <= numberOfList; i++)
+        {
+            int temp = 0;
+            if (int.TryParse(Console.ReadLine(), out temp))
+                list.Add(temp);
+        }
+        return list;
     }
 
-    public class MessageWriter : IMessageWriter
+    static int Caluculate(List<int> sweets, int budget)
     {
-        private readonly ILogger<MessageWriter> logger;
-        private readonly IConfiguration appsettings;
+        sweets = sweets.ToList();
+        var sum = sweets.Sum();
+        var difference = sum - budget;
 
-        public MessageWriter(ILogger<MessageWriter> logger, IConfiguration appsettings)
+        while (difference > 0)
         {
-            this.logger = logger;
-            this.appsettings = appsettings;
-        }
+            var bigItems = sweets.Where(item => item > difference);
+            var smallItems = sweets.Where(item => item < difference);
+            var equalItems = sweets.Where(item => item == difference);
 
-        public void Write() =>
-            this.logger.LogInformation($"{appsettings.GetValue<string>("LogMessage")}");
+            if (equalItems.Any())
+            {
+                var target = equalItems.Single();
+                difference -= target;
+                sweets.Remove(target);
+            }
+            else if (bigItems.Any())
+            {
+                var target = bigItems.Min();
+                difference -= target;
+                sweets.Remove(target);
+            }
+            else if (smallItems.Any())
+            {
+                var target = smallItems.Max();
+                difference -= target;
+                sweets.Remove(target);
+            }
+
+        }
+        return budget - sweets.Sum();
     }
 }
