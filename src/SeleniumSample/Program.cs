@@ -12,10 +12,12 @@ namespace SeleniumSample
     class Program
     {
         private readonly IYahooTransitService _transitService;
+        private readonly IAngularMaterialDatePicker _angularMaterialDatePicker;
 
-        public Program(IYahooTransitService transitService)
+        public Program(IYahooTransitService transitService,IAngularMaterialDatePicker angularMaterialDatePicker)
         {
             _transitService = transitService;
+            _angularMaterialDatePicker = angularMaterialDatePicker;
         }
 
         static void Main(string[] args)
@@ -25,6 +27,7 @@ namespace SeleniumSample
                 {
                     services.AddTransient<Program>();
                     services.AddTransient<IYahooTransitService, YahooTransitService>();
+                    services.AddTransient<IAngularMaterialDatePicker,AngularMaterialDatePicker>();
                 })
                 .Build().Services
                 .GetRequiredService<Program>()
@@ -33,7 +36,9 @@ namespace SeleniumSample
 
         public void Run(string[] args)
         {
-            Console.WriteLine(this._transitService.GetFareOfRoute1("大阪","東京"));
+            var time = new DateTime(int.Parse(Console.ReadLine()), int.Parse(Console.ReadLine()), int.Parse(Console.ReadLine()));
+            this._angularMaterialDatePicker.SetDatePicker(time);
+            //Console.WriteLine(this._transitService.GetFareOfRoute1("大阪","東京"));
         }
     }
 }

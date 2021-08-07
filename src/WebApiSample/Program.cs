@@ -21,6 +21,7 @@ namespace WebApiSample
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config.AddJsonFile("appsettings.kinakomotitti.json",true);
+                    
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

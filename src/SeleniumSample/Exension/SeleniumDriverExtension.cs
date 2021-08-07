@@ -13,6 +13,7 @@ namespace SeleniumSample.Exension
         public static void SendTabKey(this IWebElement element)
         {
             element.SendKeys("\uE004");
+            element.DelayAction(100);
         }
 
         public static void SendTabKey(this IWebElement element, int number)
@@ -22,6 +23,34 @@ namespace SeleniumSample.Exension
                 element.SendTabKey();
             }
         }
+        public static void SendArrowLeftKey(this IWebElement element)
+        {
+            element.SendKeys("\uE058");
+        }
+
+        public static void SendArrowLeftKey(this IWebElement element, int number)
+        {
+            for (int i = 0; i < number; i++)
+            {
+                element.SendArrowLeftKey();
+                element.DelayAction(100);
+            }
+        }
+        public static void SendArrowRightKey(this IWebElement element)
+        {
+            element.SendKeys("\uE05A");
+        }
+
+        public static void SendArrowRightKey(this IWebElement element, int number)
+        {
+            for (int i = 0; i < number; i++)
+            {
+                element.SendArrowRightKey();
+                element.DelayAction(100);
+            }
+        }
+
+
         public static void DelayAction(this IWebElement element, int millisecondsDelay)
         {
             Task.Delay(millisecondsDelay).Wait();
